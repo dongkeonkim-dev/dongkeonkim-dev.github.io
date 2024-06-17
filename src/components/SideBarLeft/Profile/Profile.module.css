@@ -1,0 +1,11 @@
+.profile{
+    text-align: center;
+}
+
+.profile img {
+    width: 100px; /* 원하는 크기로 조정 */
+    height: 100px; /* 원하는 크기로 조정 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    object-fit: cover; /* 이미지 크기를 조정하여 원형 안에 맞추기 */
+    margin-top: 30px;
+}

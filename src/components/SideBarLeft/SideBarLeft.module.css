@@ -1,0 +1,11 @@
+.sidebarLeft {
+    display: grid;
+    grid-template-rows: 250px 30px 1fr 250px;
+    height: 100%
+  }
+
+@media (max-width: 768px) {
+    .sidebarLeft {
+      display: none;
+    }
+}

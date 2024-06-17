@@ -1,0 +1,10 @@
+.sidebarRight {
+    display: grid;
+    grid-template-rows: 250px 800px 250px;
+  }
+
+@media (max-width: 1200px) {
+    .sidebarRight {
+      display: none;
+    }
+}
