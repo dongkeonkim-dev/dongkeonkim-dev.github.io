@@ -1,16 +1,27 @@
+import { usePathname } from 'next/navigation';
 import Profile from './Profile/Profile';
 import SearchBar from './SearchBar/SearchBar';
-import Categories from './Scroller/Scroller';
+import PostList from './PostList/PostList';
 import SocialMedia from './SocialMedia/SocialMedia';
 import styles from './SideBarLeft.module.css';
 
+interface Post {
+  name: string;
+  slug: string;
+}
 
-export default function SideBarLeft() {
+interface Node {
+  name: string;
+  slug: string;
+  children: (Node | Post)[];
+}
+
+export default function SideBarLeft({ postTree }: { postTree : Node }) {
   return (
     <div className={styles.sidebarLeft}>
       <Profile />
       <SearchBar />
-      <Categories />
+      <PostList postTree={postTree}/>
       <SocialMedia />
     </div>
   );
