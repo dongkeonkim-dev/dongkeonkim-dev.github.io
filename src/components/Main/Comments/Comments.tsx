@@ -16,7 +16,7 @@ const Comments: React.FC = () => {
     scriptElem.setAttribute('repo', 'dongkeonkim-dev/dongkeonkim-dev.github.io');
     scriptElem.setAttribute('issue-term', issueTerm);
     scriptElem.setAttribute('theme', 'github-light');
-    scriptElem.setAttribute('label', 'blog-comment');
+    scriptElem.setAttribute('label', 'Comment');
     scriptElem.crossOrigin = 'anonymous';
     commentBox.current.appendChild(scriptElem);
 
