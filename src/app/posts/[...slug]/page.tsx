@@ -1,23 +1,20 @@
 import fs from 'fs'
 import path from 'path'
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import SideBarRight from '@/components/Main/SideBarRight/SideBarRight';
+import { getMdxContent } from '@/utils/mdx';
+import styles from './page.module.css'
 
 export default async function Post({ params }: { params: { slug: string[] } }) {
     const { slug } = params;
-    const mdxSource = await getSource('.mdx', 'posts', slug);
+  const { html, headers } = await getMdxContent(slug);
+  console.log(headers)
 
-    return (
-        <div>
-            <h1>Title</h1>
-            <MDXRemote source={mdxSource} />
-        </div>
-    );
-}
-
-export async function getSource(fileType:string, directory:string, slugArray: string[]) {
-    const filePath = path.join(directory, ...slugArray) + fileType
-    let source = fs.readFileSync(filePath, 'utf8');
-    return source
+  return (
+    <div className={styles.container}>
+      <div className={styles.page} dangerouslySetInnerHTML={{ __html: html }} />
+      <SideBarRight headers={headers} />
+    </div>
+  );
 }
 
 export async function generateStaticParams() {

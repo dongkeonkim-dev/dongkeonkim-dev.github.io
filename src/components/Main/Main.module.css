@@ -1,0 +1,10 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  
+.page{
+ padding-left : 30px;
+ padding-right : 30px;
+ padding-bottom: 15px;
+}

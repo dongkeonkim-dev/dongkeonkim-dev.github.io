@@ -1,9 +1,12 @@
 import nextMdx from '@next/mdx'
+const remarkSlug = await import('remark-slug');
 
 const withMdx = nextMdx({
   // By default only the `.mdx` extension is supported.
   extension: /\.mdx?$/,
-  options: {/* otherOptions… */}
+  options: {
+    remarkPlugins: [remarkSlug.default],
+  }
 })
 /** @type {import('next').NextConfig} */
 const nextConfig = withMdx({

@@ -19,10 +19,12 @@ interface Node {
 export default function SideBarLeft({ postTree }: { postTree : Node }) {
   return (
     <div className={styles.sidebarLeft}>
-      <Profile />
-      <SearchBar />
-      <PostList postTree={postTree}/>
-      <SocialMedia />
+      <div className={styles.floatContainer}>
+        <Profile />
+        <SearchBar />
+        <PostList postTree={postTree}/>
+        <SocialMedia />
+      </div>
     </div>
   );
 };

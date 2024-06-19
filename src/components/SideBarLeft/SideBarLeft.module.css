@@ -1,12 +1,28 @@
 .sidebarLeft {
-    display: grid;
-    grid-template-rows: 250px 30px 1fr 250px;
-    height: 100%;
-    padding: 50px;
+    display: block;
+    padding-left :30px;
+    padding-right :30px;
   }
 
+
+.floatContainer{
+  display: grid;
+  grid-template-rows: 250px 30px 500px 100px;
+  height: 600px;
+  position: sticky;
+  left: 0px;
+  top: 0px;
+}
+
 @media (max-width: 768px) {
-    .sidebarLeft {
-      display: none;
-    }
+  .sidebarLeft {
+    display: none;
+  }
+}
+
+
+@media (max-height: 500px) {
+  .sidebarLeft {
+    height: auto;
+  }
 }

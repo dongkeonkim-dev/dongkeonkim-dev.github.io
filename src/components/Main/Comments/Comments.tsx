@@ -1,13 +1,14 @@
 'use client'
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import styles from './Comments.module.css'
 
 const Comments: React.FC = () => {
   const commentBox = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const issueTerm = pathname?.split('/').pop();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!commentBox.current || !issueTerm) return;
 
     const scriptElem = document.createElement('script');
@@ -18,9 +19,14 @@ const Comments: React.FC = () => {
     scriptElem.setAttribute('theme', 'github-light');
     scriptElem.setAttribute('label', 'Comment');
     scriptElem.crossOrigin = 'anonymous';
-    commentBox.current.appendChild(scriptElem);
+    
+    
+    // Ensure the commentBox is cleared before appending the new script
+    if (commentBox.current) {
+      commentBox.current.innerHTML = '';
+      commentBox.current.appendChild(scriptElem);
+    }
 
-    // Clean up the script element on component unmount
     return () => {
       if (commentBox.current) {
         commentBox.current.innerHTML = '';
@@ -28,7 +34,7 @@ const Comments: React.FC = () => {
     };
   }, [issueTerm]);
 
-  return <div ref={commentBox} />;
+  return <div className = {styles.comments} ref={commentBox} />;
 };
 
 export default Comments;

@@ -1,0 +1,32 @@
+.header {
+  position: sticky;
+  left: 0px;
+  top: 0px;
+  height: 50px;
+  background-color: white;
+  align-content: center;
+  z-index: 1; /* Ensure it stays on top of other elements */
+  /* transition: border-bottom 0.3s ease; */
+}
+
+.header.scrolled {
+  border-bottom: 1px solid lightgray;
+}
+
+.menu {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none; /* Remove default list style */
+}
+
+.menuItem{
+  padding: 0 15px; /* Add some spacing between menu items */
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+}
+
+.menuItem a{
+  text-decoration: none;
+  color: black;
+}

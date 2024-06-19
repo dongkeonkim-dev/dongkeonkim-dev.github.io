@@ -1,0 +1,99 @@
+.sidebarRight {
+  display: block;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.toc {
+  display: block;
+  position: sticky;
+  top: 90px; /* fixed header height */
+
+}
+
+.list{
+  max-height: 600px;
+  padding-left:0;
+  overflow-y: scroll;
+  scrollbar-width:thin;
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent; /* For Firefox */
+}
+/* .list::-webkit-scrollbar {
+  width: 5px; 
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+.list:hover::-webkit-scrollbar {
+  display: block;
+} */
+
+.tocItem {
+  list-style-type: none;
+  font-size: medium;
+  padding-left : 5px;
+}
+
+.tocItem:hover {
+  background-color: #f5f5f5;
+}
+
+.depth1{
+  border-top-right-radius: 20px;
+}
+
+.depth2{
+  padding-left : 5px;
+  margin-left : 10px;
+  border-left : 1px solid lightgray;
+  border-top-right-radius: 20px;
+  font-size: small;
+}
+
+.depth3{
+  padding-left : 15px;
+  margin-left : 10px;
+  border-left : 1px solid lightgray;
+  border-top-right-radius: 20px;
+  font-size: small;
+}
+
+.tocLink {
+  text-decoration: none;
+  color: gray;
+  display: block;
+  margin: 0;
+  padding: 5px;
+}
+
+.tocLink.active {
+  font-weight: bold;
+  color: royalblue;
+}
+
+.tocItem.active.depth2{
+  border-left : 1px solid royalblue;
+}
+.tocItem.active.depth3{
+  border-left : 1px solid royalblue;
+}
+
+
+
+@media (max-width: 1200px) {
+  .sidebarRight {
+    display: none;
+  }
+}
+
