@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '@/components/Main/Header/Header';
-import Comments from '@/components/Main/Comments/Comments';
+
 
 import style from './Main.module.css'
 
@@ -16,7 +16,7 @@ const Main: React.FC<MainProps> = ({ children, postTree }) => {
         <div className = {style.page}>
             {children}
         </div>
-        <Comments />
+        
     </div>
   );
 };

@@ -18,6 +18,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
+      <head>
+        <script src="https://kit.fontawesome.com/cf485cac6a.js" crossOrigin="anonymous"></script>
+      </head>
       <body className={inter.className}>
         <div className="container">
           <SideBarLeft postTree={postTree} />

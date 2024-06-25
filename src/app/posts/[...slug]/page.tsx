@@ -3,6 +3,7 @@ import path from 'path'
 import SideBarRight from '@/components/Main/SideBarRight/SideBarRight';
 import { getMdxContent } from '@/utils/mdx';
 import styles from './page.module.css'
+import Comments from '@/components/Main/Comments/Comments';
 
 export default async function Post({ params }: { params: { slug: string[] } }) {
     const { slug } = params;
@@ -10,10 +11,14 @@ export default async function Post({ params }: { params: { slug: string[] } }) {
   console.log(headers)
 
   return (
-    <div className={styles.container}>
-      <div className={styles.page} dangerouslySetInnerHTML={{ __html: html }} />
-      <SideBarRight headers={headers} />
+    <div className={styles.main}>
+        <div className={styles.container}>
+            <div className={styles.page} dangerouslySetInnerHTML={{ __html: html }} />
+            <Comments />
+        </div>
+        <SideBarRight headers={headers} />
     </div>
+    
   );
 }
 

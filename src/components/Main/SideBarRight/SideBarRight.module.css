@@ -1,13 +1,13 @@
 .sidebarRight {
   display: block;
-  padding-left: 30px;
-  padding-right: 30px;
+  margin-left: 30px;
+  margin-right: 0px;
 }
 
 .toc {
   display: block;
   position: sticky;
-  top: 90px; /* fixed header height */
+  top: 70px; /* fixed header height */
 
 }
 
@@ -75,10 +75,11 @@
   display: block;
   margin: 0;
   padding: 5px;
+  font-weight: 350;
 }
 
 .tocLink.active {
-  font-weight: bold;
+  font-weight: 500;
   color: royalblue;
 }
 
@@ -89,11 +90,8 @@
   border-left : 1px solid royalblue;
 }
 
-
-
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .sidebarRight {
-    display: none;
+    display: none
   }
 }
-
