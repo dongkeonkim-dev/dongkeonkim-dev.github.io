@@ -6,18 +6,26 @@ import styles from './Comments.module.css'
 const Comments: React.FC = () => {
   const commentBox = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const issueTerm = pathname?.split('/').pop();
+  const dataTerm = pathname?.split('/').pop();
 
   useLayoutEffect(() => {
-    if (!commentBox.current || !issueTerm) return;
+    if (!commentBox.current || !dataTerm) return;
 
     const scriptElem = document.createElement('script');
-    scriptElem.src = 'https://utteranc.es/client.js';
+    scriptElem.src = "https://giscus.app/client.js";
     scriptElem.async = true;
-    scriptElem.setAttribute('repo', 'dongkeonkim-dev/dongkeonkim-dev.github.io');
-    scriptElem.setAttribute('issue-term', issueTerm);
-    scriptElem.setAttribute('theme', 'github-light');
-    scriptElem.setAttribute('label', 'Comment');
+    scriptElem.setAttribute('data-repo', "dongkeonkim-dev/dongkeonkim-dev.github.io");
+    scriptElem.setAttribute('data-repo-id', "R_kgDOMKYX3g");
+    scriptElem.setAttribute('data-category', "Announcements");
+    scriptElem.setAttribute('data-category-id', "DIC_kwDOMKYX3s4CgZul");
+    scriptElem.setAttribute('data-mapping', "specific");
+    scriptElem.setAttribute('data-term', dataTerm);
+    scriptElem.setAttribute('data-strict', "0");
+    scriptElem.setAttribute('data-reactions-enabled', "1");
+    scriptElem.setAttribute('data-emit-metadata', "0");
+    scriptElem.setAttribute('data-input-position', "top");
+    scriptElem.setAttribute('data-theme', "preferred_color_scheme");
+    scriptElem.setAttribute('data-lang', "ko");
     scriptElem.crossOrigin = 'anonymous';
     
     
@@ -32,7 +40,7 @@ const Comments: React.FC = () => {
         commentBox.current.innerHTML = '';
       }
     };
-  }, [issueTerm]);
+  }, [dataTerm]);
 
   return <div className = {styles.comments} ref={commentBox} />;
 };
