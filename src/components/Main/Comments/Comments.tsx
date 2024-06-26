@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import styles from './Comments.module.css';
@@ -7,6 +7,7 @@ const Comments: React.FC = () => {
   const commentBox = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const dataTerm = pathname?.split('/').pop();
+  const giscusCssPath = 'https://github.com/dongkeonkim-dev/dongkeonkim-dev.github.io/blob/main/public/giscus.css'
 
   useLayoutEffect(() => {
     if (!commentBox.current || !dataTerm) return;
@@ -24,12 +25,10 @@ const Comments: React.FC = () => {
     scriptElem.setAttribute('data-reactions-enabled', "0");
     scriptElem.setAttribute('data-emit-metadata', "0");
     scriptElem.setAttribute('data-input-position', "top");
-    scriptElem.setAttribute('data-theme', "/giscus.css");
+    scriptElem.setAttribute('data-theme', giscusCssPath);
     scriptElem.setAttribute('data-lang', "ko");
     scriptElem.crossOrigin = 'anonymous';
-    
-    
-    // Ensure the commentBox is cleared before appending the new script
+
     if (commentBox.current) {
       commentBox.current.innerHTML = '';
       commentBox.current.appendChild(scriptElem);
@@ -42,7 +41,7 @@ const Comments: React.FC = () => {
     };
   }, [dataTerm]);
 
-  return <div className = {styles.comments} ref={commentBox} />;
+  return <div className={styles.comments} ref={commentBox} />;
 };
 
 export default Comments;
