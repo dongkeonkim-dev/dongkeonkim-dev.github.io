@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import SideBarLeft from '@/components/SideBarLeft/SideBarLeft';
-import Main from '@/components/Main/Main';
+import Header from '@/components/Main/Header/Header';
 import { getDirectoryTree } from '@/utils/directory';
 import path from 'path';
-import './globals.css';
+import styles from './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <div className="container">
           <SideBarLeft postTree={postTree} />
-          <Main postTree={postTree}>{children}</Main> 
+          <div className={styles.main}>
+        <Header />
+        <div className = {styles.page}>
+            {children}
+        </div>
+        
+    </div> 
         </div>
       </body>
     </html>

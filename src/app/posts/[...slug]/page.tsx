@@ -1,31 +1,24 @@
-import fs from 'fs'
-import path from 'path'
-import SideBarRight from '@/components/Main/SideBarRight/SideBarRight';
+import path from 'path';
 import { getMdxContent } from '@/utils/mdx';
+import PostContent from './post-contents';
+import fs from 'fs'
 import styles from './page.module.css'
-import Comments from '@/components/Main/Comments/Comments';
 
-export default async function Post({ params }: { params: { slug: string[] } }) {
-    const { slug } = params;
+interface PageProps {
+  params: { slug: string[] };
+}
+
+export default async function Page({ params }: PageProps) {
+  const { slug } = params;
   const { html, headers } = await getMdxContent(slug);
-  console.log(headers)
 
-  return (
-    <div className={styles.main}>
-        <div className={styles.container}>
-            <div className={styles.page} dangerouslySetInnerHTML={{ __html: html }} />
-            <Comments />
-        </div>
-        <SideBarRight headers={headers} />
-    </div>
-    
-  );
+  return <PostContent html={html} headers={headers} />;
 }
 
 export async function generateStaticParams() {
-    const postPath = path.join(process.cwd(), 'posts')
-    const slugs = getAllFileSlugs(postPath)
-    return slugs.map((slug) => ({slug : slug}))
+  const postPath = path.join(process.cwd(), 'posts');
+  const slugs = getAllFileSlugs(postPath);
+  return slugs.map((slug) => ({ slug }));
 }
 
 export function getAllFileSlugs(dirPath: string, dirs: string[] = [], slugs: string[][] = []): string[][] {

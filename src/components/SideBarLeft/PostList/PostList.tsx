@@ -36,19 +36,18 @@ function PostList({postTree}:{postTree:Node}) {
 export default PostList;
 
 function renderTree(node: Node | Post, fullUrl:string) {
-  const nodeHref = `/posts/${node.slug}`.replace(/\\/g, '/');
-  const formattedFullUrl = fullUrl.replace(/\\/g, '/');
+  const nodeSlug = node.slug.replace(/\\/g, '/');
+  const nodeHref = `/posts/${nodeSlug}`;
+  const formattedFullUrl = decodeURIComponent(fullUrl).replace(/\\/g, '/');
   const isActive = formattedFullUrl.endsWith(nodeHref);
   
   if ('children' in node) {
-    const nodeId = node.name.replace(/\s+/g, '-').toLowerCase();
+    const nodeId = node.slug.replace(/\s+/g, '-').toLowerCase();
     return (
-      <li className={styles.category} key={node.name}>
+      <li className={styles.category} key={nodeId}>
         <input type="checkbox" id={nodeId} onChange={handleCheckboxChange}/>
         <label className={styles.label} htmlFor={nodeId} >
-          <span>
-            {node.name}
-          </span>
+          <span className={styles.labelText}>{node.name}</span>
           <span className={`${styles.arrow}`}>
             <img src="/chevron-right.svg" alt="chevron" className={styles.chevron} /> 
           </span>
@@ -61,9 +60,9 @@ function renderTree(node: Node | Post, fullUrl:string) {
   } else {
     return (
       <li>
-          <Link className={styles.link} href={`/posts/${node.slug}`}>
+          <Link className={styles.link} href={nodeHref}>
             <label className={`${styles.label } ${isActive ? styles.activeLabel : ''}`}>
-              {node.name}
+              <span className={styles.labelText}>{node.name}</span>
             </label>
           </Link>
       </li>
@@ -75,14 +74,14 @@ function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
   const checkbox = event.target;
   const list = checkbox.parentElement?.querySelector(`.${styles.list}`) as HTMLElement;
 
-  list.style.height = list.scrollHeight + 'px';
-  if (checkbox.checked) {
-    setTimeout(() => {
-      list.style.height = 'auto';
-    }, 400);
-  } else {
-    setTimeout(() => {
-      list.style.height = '0';
-    }, 10);
-  }
+    list.style.height = list.scrollHeight + 'px';
+    if (checkbox.checked) {
+      setTimeout(() => {
+        list.style.height = 'auto';
+      }, 400);
+    } else {
+      setTimeout(() => {
+        list.style.height = '0';
+      }, 10);
+    }
 }

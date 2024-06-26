@@ -3,8 +3,8 @@
     display: flex;
     justify-content: space-evenly;
     width: 190px;
-    position: fixed;
-    bottom: 25px;
+    padding-top:25px;
+    padding-bottom: 25px;
 }
 
 .label{
@@ -68,7 +68,7 @@
 	left: 0px;
 	top: 0;
 	content: attr(data-text);
-	-webkit-text-stroke: 3px royalblue;
+	-webkit-text-stroke: 4px royalblue;
 	z-index: -1;
 }
 

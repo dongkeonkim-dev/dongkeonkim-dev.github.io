@@ -70,7 +70,7 @@ const SocialMedia = () => {
         </a>
       </div>
       <div>
-        <a href="https://linkedin.com/in/동건-김-019563312">
+        <a href="https://linkedin.com/in/김동건">
           <LinkedInIcon fill="#0a66c2" width="30px" height="30px" />
         </a>
       </div>

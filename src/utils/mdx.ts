@@ -1,7 +1,6 @@
 import { remark } from 'remark';
 import remarkParse from 'remark-parse';
 import { visit } from 'unist-util-visit';
-import slugify from 'slugify';
 import path from 'path'
 import fs from 'fs'
 import matter from 'gray-matter';
@@ -45,7 +44,8 @@ export async function extractHeaders(mdxContent: string): Promise<Header[]> {
 
 export async function getMdxContent(slugArray: string[]): Promise<{ html: string; headers: string[]; frontMatter: Record<string, unknown>; }> {
   const filePath = path.join(process.cwd(), 'posts', ...slugArray) + '.mdx';
-  const source = fs.readFileSync(filePath, 'utf8');
+  const decodedFilePath = decodeURIComponent(filePath);
+  const source = fs.readFileSync(decodedFilePath, 'utf8');
   const { content, data } = matter(source);
   const html = await mdxToHtml(content);
   const headers = await extractHeaders(content);

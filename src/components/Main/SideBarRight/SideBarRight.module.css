@@ -14,30 +14,10 @@
 .list{
   max-height: 600px;
   padding-left:0;
-  overflow-y: scroll;
+  overflow-y: auto;
   scrollbar-width:thin;
-  scrollbar-color: rgba(0, 0, 0, 0.08) transparent; /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
 }
-/* .list::-webkit-scrollbar {
-  width: 5px; 
-}
-
-.list::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-}
-
-.list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.list::-webkit-scrollbar {
-  display: none;
-}
-
-.list:hover::-webkit-scrollbar {
-  display: block;
-} */
 
 .tocItem {
   list-style-type: none;

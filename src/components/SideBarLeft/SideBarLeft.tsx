@@ -18,7 +18,7 @@ interface Node {
 
 export default function SideBarLeft({ postTree }: { postTree : Node }) {
   return (
-    <div className={styles.sidebarLeft}>
+    <div className={`${styles.sidebarLeft} ${styles.preventOverflow}`}>
       <div className={styles.floatContainer}>
         <Profile />
         <SearchBar />

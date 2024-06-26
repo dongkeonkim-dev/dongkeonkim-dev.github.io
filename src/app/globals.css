@@ -24,3 +24,14 @@ Body {
 h1, h2, h3, h4, h5, h6 {
   scroll-margin-top: 65px; /* Adjust this value as needed */
 }
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.page{
+padding-left : 30px;
+padding-right : 0px;
+padding-bottom: 15px;
+}
