@@ -15,6 +15,19 @@ const nextConfig = withMdx({
   experimental: {
     mdxRs: true,
   },
+  async headers() {
+    return [
+      {
+        source: '/giscus.css',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ]
+  },
 })
 
 export default nextConfig
