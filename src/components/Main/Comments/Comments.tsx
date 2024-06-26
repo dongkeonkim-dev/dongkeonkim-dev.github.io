@@ -1,7 +1,7 @@
 'use client'
 import React, { useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import styles from './Comments.module.css'
+import styles from './Comments.module.css';
 
 const Comments: React.FC = () => {
   const commentBox = useRef<HTMLDivElement>(null);
@@ -21,10 +21,10 @@ const Comments: React.FC = () => {
     scriptElem.setAttribute('data-mapping', "specific");
     scriptElem.setAttribute('data-term', dataTerm);
     scriptElem.setAttribute('data-strict', "0");
-    scriptElem.setAttribute('data-reactions-enabled', "1");
+    scriptElem.setAttribute('data-reactions-enabled', "0");
     scriptElem.setAttribute('data-emit-metadata', "0");
     scriptElem.setAttribute('data-input-position', "top");
-    scriptElem.setAttribute('data-theme', "preferred_color_scheme");
+    scriptElem.setAttribute('data-theme', "/giscus.css");
     scriptElem.setAttribute('data-lang', "ko");
     scriptElem.crossOrigin = 'anonymous';
     
