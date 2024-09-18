@@ -17,6 +17,11 @@ interface Post {
   slug: string;
 }
 
+interface TreeNodeProps {
+  node: Node | Post;
+  fullUrl: string;
+}
+
 function PostList({postTree}:{postTree:Node}) {
   const [fullUrl, setFullUrl] = useState('');
   const pathname = usePathname();
@@ -29,7 +34,10 @@ function PostList({postTree}:{postTree:Node}) {
 
   return (
     <ul className={styles.postList}>
-      {postTree.children.map((child) => renderTree(child,fullUrl))}
+      {postTree.children.map((child) => (
+        <TreeNode key={child.slug} node={child} fullUrl={fullUrl} />
+      ))}
+      {/* {postTree.children.map((child) => renderTree(child,fullUrl))} */}
     </ul>
   );
 }
@@ -37,8 +45,8 @@ function PostList({postTree}:{postTree:Node}) {
 export default PostList;
 
 
-function renderTree(node: Node | Post, fullUrl: string) {
-  const isNode = (node: any): node is Node => 'children' in node;
+const TreeNode: React.FC<TreeNodeProps> = ({ node, fullUrl }) => {
+  const isNode = (node: Node | Post): node is Node => 'children' in node;
   const nodeSlug = node.slug.replace(/\\/g, '/');
   const nodeHref = isNode(node) && node.hasPage ? `/${node.name}` : '';
   const formattedFullUrl = decodeURIComponent(fullUrl).replace(/\\/g, '/');
@@ -68,7 +76,10 @@ function renderTree(node: Node | Post, fullUrl: string) {
               </Link>
             </li>
           )}
-          {node.children.map((child) => renderTree(child, fullUrl))}
+          {/* {node.children.map((child) => renderTree(child, fullUrl))} */}
+          {node.children.map((child) => (
+            <TreeNode key={child.slug} node={child} fullUrl={fullUrl} />
+          ))}
         </ul>
       </li>
     );
@@ -83,59 +94,21 @@ function renderTree(node: Node | Post, fullUrl: string) {
       </li>
     );
   }
-}
+};
 
-// function renderTree(node: Node | Post, fullUrl:string) {
-//   const nodeSlug = node.slug.replace(/\\/g, '/');
-//   const nodeHref = `/posts/${nodeSlug}`;
-//   const formattedFullUrl = decodeURIComponent(fullUrl).replace(/\\/g, '/');
-//   const isActive = formattedFullUrl.endsWith(nodeHref);
-  
-//   if ('children' in node) {
-//     const nodeId = node.slug.replace(/\s+/g, '-').toLowerCase();
-//     return (
-//       <li className={styles.category} key={nodeId}>
-//         <input type="checkbox" id={nodeId} onChange={handleCheckboxChange}/>
-//         <label className={styles.label} htmlFor={nodeId} >
-//           <span className={styles.labelText}>{node.name}</span>
-//           <span className={`${styles.arrow}`}>
-//             <Image src="/chevron-right.svg" 
-//               width = {16}
-//               height = {16}
-//               alt="chevron" 
-//               className={styles.chevron} 
-//             /> 
-//           </span>
-//         </label>
-//         <ul className={styles.list}>
-//           {node.children.map((child) => renderTree(child,fullUrl))}
-//         </ul>
-//       </li>
-//     );
+
+
+// function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
+//   const checkbox = event.target;
+//   const list = checkbox.parentElement?.querySelector(`.${styles.list}`) as HTMLElement;
+//   list.style.height = list.scrollHeight + 'px';
+//   if (checkbox.checked) {
+//     setTimeout(() => {
+//       list.style.height = 'auto';
+//     }, 400);
 //   } else {
-//     return (
-//       <li>
-//         <Link className={styles.link} href={nodeHref}>
-//           <label className={`${styles.label } ${isActive ? styles.activeLabel : ''}`}>
-//             <span className={styles.labelText}>{node.name}</span>
-//           </label>
-//         </Link>
-//       </li>
-//     );
+//     setTimeout(() => {
+//       list.style.height = '0';
+//     }, 10);
 //   }
 // }
-
-function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
-  const checkbox = event.target;
-  const list = checkbox.parentElement?.querySelector(`.${styles.list}`) as HTMLElement;
-  list.style.height = list.scrollHeight + 'px';
-  if (checkbox.checked) {
-    setTimeout(() => {
-      list.style.height = 'auto';
-    }, 400);
-  } else {
-    setTimeout(() => {
-      list.style.height = '0';
-    }, 10);
-  }
-}

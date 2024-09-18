@@ -10,7 +10,7 @@ interface Header {
 }
 
 export default function Toc({ headers = [] } : {headers:Header[]}){
-  console.log("headers:",headers)
+  console.log('headers:',headers);
   
   const [activeId, setActiveId] = useState<string | null>(null);
 

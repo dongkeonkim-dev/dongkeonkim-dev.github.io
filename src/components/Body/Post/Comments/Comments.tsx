@@ -5,8 +5,10 @@ import styles from './Comments.module.css';
 
 const Comments: React.FC = () => {
   const commentBox = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
+  const pathname = usePathname().replace(/\/$/, '');
+  console.log('Pathname:', pathname);
   const dataTerm = pathname?.split('/').pop();
+  console.log('dataTerm:', dataTerm);
 
   useLayoutEffect(() => {
     if (!commentBox.current || !dataTerm) return;

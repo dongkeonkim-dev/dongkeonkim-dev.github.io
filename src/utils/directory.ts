@@ -17,7 +17,7 @@ export function getDirectoryTree(dirPath: string): Node {
   function readDirectory(directory: string, basePath: string): Node {
     const name = path.basename(directory);
     const relativePath = path.relative(basePath, directory).replace(/\\/g, '/');
-    const slug = directory;
+    // const slug = directory;
     const children: (Node | Post)[] = [];
     let hasPage = false;
 
