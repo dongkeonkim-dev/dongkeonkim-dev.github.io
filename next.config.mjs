@@ -19,8 +19,6 @@ const nextConfig = withMdx({
   reactStrictMode: true, 
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   output: 'export',
-  basePath: '', // 
-  assetPrefix: '/docs/',
   trailingSlash: true,  // 경로에 슬래시 추가 (GitHub Pages 호환성)
   images: {
     unoptimized: true,  // 이미지 최적화 비활성화 (GitHub Pages에서 필요)
