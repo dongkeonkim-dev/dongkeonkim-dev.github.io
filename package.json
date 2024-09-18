@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build && next export -o docs",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "gh-pages -d out"
+    "deploy": "git add . && git commit -m 'Deploy to docs' && git push origin main"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
