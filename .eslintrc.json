@@ -12,7 +12,9 @@
     "quotes": ["error", "single"],
     "indent": ["error", 2],
     "no-unused-vars": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/click-events-have-key-events": "off"
   },
   "settings": {
     "react": {
@@ -24,4 +26,5 @@
       }
     }
   }
+  
 }

@@ -1,0 +1,14 @@
+.container {
+  padding-right:30px;
+}
+
+.main{
+  display: grid;
+  grid-template-columns: 1fr 200px;
+}
+
+@media (max-width: 1280px) {
+  .main {
+      grid-template-columns: 1fr;
+  }   
+}

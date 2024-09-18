@@ -1,59 +1,76 @@
-import { remark } from 'remark';
-import remarkParse from 'remark-parse';
-import { visit } from 'unist-util-visit';
-import path from 'path'
-import fs from 'fs'
-import matter from 'gray-matter';
-import mdxToHtml from './mdx-to-html';
-import { unified } from 'unified';
+import React, { ReactNode } from 'react';
 
-interface Header {
-  depth: number;
-  value: string;
+export interface Header {
   id: string;
-}
-export async function getSource(fileType:string, directory:string, slugArray: string[]) {
-  const filePath = path.join(directory, ...slugArray) + fileType
-  let source = fs.readFileSync(filePath, 'utf8');
-  return source
+  level: number;
+  text: string;
 }
 
-export async function extractHeaders(mdxContent: string): Promise<Header[]> {
+let headerCount = 0;
+
+export function extractHeaders(children: React.ReactNode): Header[] {
+  console.log("children",children)
   const headers: Header[] = [];
-  const processor = unified().use(remarkParse);
-  const file = processor.parse(mdxContent);
 
-  let idIndex = 1;
+  function traverse(node: React.ReactNode) {
+    if (!node) return;
 
-  visit(file, 'heading', (node: any, index: number | undefined) => {
-    if (!node || !node.children || index === undefined) return;
+    
+    if (Array.isArray(node)) { // 배열일 경우
+      console.log('Traversing array node:', node);
+      node.forEach((child) => traverse(child));
+    } else if (React.isValidElement(node)) { // 배열이 아닐 경우
+      const { type, props } = node;
+      console.log('Traversing valid element:', node);
+      console.log('Element type:', type);
+      console.log('Element props:', props);
 
-    const textNode = node.children.find((child: any) => child.type === 'text');
-    if (textNode) {
-      const id = `heading-${idIndex}`;
-      headers.push({
-        depth: node.depth,
-        value: textNode.value,
-        id,
-      });
-      idIndex += 1;
+      if (typeof type === 'string' && /^h[1-6]$/.test(type)) {
+        const headerLevel = parseInt(type.substring(1), 10);
+        const id = `header-${++headerCount}`;
+        const text = React.Children.toArray(props.children).reduce((acc, child) => {
+          if (typeof child === 'string') {
+            return acc + child;
+          } else if (React.isValidElement(child)) {
+            return acc + extractTextFromNode(child);
+          }
+          return acc;
+        }, '');
+
+        headers.push({
+          id,
+          level: headerLevel,
+          text,
+        });
+
+        console.log('Extracted header:', { id, level: headerLevel, text });
+      }
+
+      if (props && props.children) {
+        traverse(props.children);
+      }
+    } else {
+      console.log('Node is not valid element or array:', node);
     }
-  });
+  }
+
+  function extractTextFromNode(node: React.ReactNode): string {
+    if (typeof node === 'string') {
+      console.log("node",node)
+      return node;
+    } else if (React.isValidElement(node)) {
+      console.log("isValidElement",React.Children.toArray(node.props.children).reduce((acc, child) => {
+        return acc + extractTextFromNode(child);
+      }, ''))
+      return React.Children.toArray(node.props.children).reduce((acc, child) => {
+        return acc + extractTextFromNode(child);
+      }, '');
+    }
+    return '';
+  }
+
+  console.log('Starting traversal with children:', children);
+  traverse(children);
+  console.log('Final extracted headers:', headers);
   return headers;
 }
-
-export async function getMdxContent(slugArray: string[]): Promise<{ html: string; headers: string[]; frontMatter: Record<string, unknown>; }> {
-  const filePath = path.join(process.cwd(), 'posts', ...slugArray) + '.mdx';
-  const decodedFilePath = decodeURIComponent(filePath);
-  const source = fs.readFileSync(decodedFilePath, 'utf8');
-  const { content, data } = matter(source);
-  const html = await mdxToHtml(content);
-  const headers = await extractHeaders(content);
-
-  return {
-    html,
-    headers: Array.isArray(headers) ? headers : [],
-    frontMatter: data,
-  };
-}
-

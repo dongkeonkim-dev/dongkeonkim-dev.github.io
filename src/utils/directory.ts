@@ -1,37 +1,48 @@
-import fs from 'fs'
+import fs from 'fs';
 import path from 'path';
 
+interface Node {
+  name: string;
+  slug: string;
+  children: (Node | Post)[];
+  hasPage: boolean;
+}
+
 interface Post {
-    name: string;
-    slug: string;
-  }
-  
-  interface Node {
-    name: string;
-    slug: string;
-    children: (Node | Post)[];
-  }
-  
-export function getDirectoryTree(dirPath: string, basePath = ''): Node {
-    const name = path.basename(dirPath);
-    const slug = path.join(basePath, name).replace(/\\/g, '/');
+  name: string;
+  slug: string;
+}
+
+export function getDirectoryTree(dirPath: string): Node {
+  function readDirectory(directory: string, basePath: string): Node {
+    const name = path.basename(directory);
+    const relativePath = path.relative(basePath, directory).replace(/\\/g, '/');
+    const slug = directory;
     const children: (Node | Post)[] = [];
+    let hasPage = false;
 
-    const items = fs.readdirSync(dirPath);
+    const files = fs.readdirSync(directory);
 
-    items.forEach((item) => {
-        const itemPath = path.join(dirPath, item);
-        const itemBasePath = path.join(basePath, item);
+    files.forEach(file => {
+      const filePath = path.join(directory, file);
+      const stat = fs.statSync(filePath);
 
-        if (fs.statSync(itemPath).isDirectory()) {
-            children.push(getDirectoryTree(itemPath, itemBasePath));
-        } else {
-            children.push({
-                name: item.replace(/\.mdx$/, ''),
-                slug: itemBasePath.replace(/\.mdx$/, ''),
-            });
-        }
+      if (stat.isDirectory()) {
+        children.push(readDirectory(filePath, basePath));
+      } else if (stat.isFile() && file === 'page.mdx') {
+        hasPage = true;
+      }
     });
 
-    return { name, slug, children };
+    return {
+      name,
+      slug : relativePath ,
+      children,
+      hasPage
+    };
+  }
+
+  return readDirectory(path.resolve(dirPath), path.resolve(dirPath));
 }
+
+export default getDirectoryTree;
