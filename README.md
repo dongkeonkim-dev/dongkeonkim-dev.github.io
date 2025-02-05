@@ -1,67 +1,67 @@
 # Next.js 블로그 프로젝트
 
-[Next.js](https://nextjs.org/)로 제작된 블로그 프로젝트입니다.
-
-## 시작하기
-
 개발 서버 실행:
 
 ```bash
 npm run dev
-# 또는
-yarn dev
-# 또는
-pnpm dev
-# 또는
-bun dev
 ```
 
-[http://localhost:3000](http://localhost:3000)에서 결과를 확인할 수 있습니다.
 
-`src/app/pages`내의 `.mdx` 파일을 수정하여 페이지를 편집할 수 있습니다. 페이지 편집을 완료한뒤, 빌드와 배포를 거치면 변경사항이 적용됩니다.
+GitHub Pages 배포 방법:
 
-## GitHub Pages 배포 방법
-
-변경사항을 GitHub Pages에 배포하는 방법:
-
-1. 프로젝트 빌드:
 ```bash
 npm run build
-```
-
-2. GitHub Pages에 배포:
-```bash
 npm run deploy
 ```
 
-배포 프로세스:
-- `/out` 디렉토리에 정적 파일 생성
-- 생성된 파일을 자동으로 `gh-pages` 브랜치에 푸시
-- GitHub Pages가 이 브랜치의 내용을 서비스
+## 폴더 구조 및 정의
+```
+src/app/pages/
+├── Tech/                    # 기술 문서
+│   ├── Backend/            # 백엔드 관련 기술
+│   │   ├── Node.js/       # Node.js 관련 내용
+│   │   ├── Database/      # DB 설계, 쿼리 최적화 등
+│   │   └── Architecture/  # 시스템 설계, 아키텍처 패턴
+│   ├── Frontend/          # 프론트엔드 기술
+│   │   ├── React/        # React 관련 내용
+│   │   ├── Next.js/      # Next.js 관련 내용
+│   │   └── CSS/          # CSS, 스타일링 관련
+│   ├── DevOps/           # 개발 운영 기술
+│   │   ├── Docker/       # 컨테이너화, 배포 환경
+│   │   ├── AWS/          # 클라우드 서비스 활용
+│   │   └── CI-CD/        # 지속적 통합/배포
+│   └── CS/               # 컴퓨터 과학 기초
+│       ├── Algorithm/    # 알고리즘 학습, 문제 풀이
+│       ├── DataStructure/# 자료구조 이론, 구현
+│       └── Network/      # 네트워크 프로토콜, 보안
+├── Projects/             # 프로젝트 문서
+│   └── [프로젝트명]/     # 각 프로젝트별 문서화
+│       ├── Overview/     # 프로젝트 개요
+│       ├── Architecture/ # 설계 문서
+│       └── Issues/       # 트러블슈팅
+├── TIL/                  # Today I Learned
+│   └── [연도-월]/        # 일일 학습 기록
+└── About/               # 자기소개
+    ├── Resume/          # 이력서
+    └── Portfolio/       # 포트폴리오
+```
 
-### 설정 파일
+1. **Tech/**
+   - 기술 학습 내용 정리
+   - 실제 적용 사례 포함
+   - 코드 예제 필수
+   - 참고 자료 출처 명시
 
-GitHub Pages 배포를 위한 주요 설정:
+2. **Projects/**
+   - 프로젝트 목적과 개요
+   - 사용 기술 스택
+   - 아키텍처 설계도
+   - 구현 과정 및 의도
+   - 발생한 문제와 해결 과정
+   - 회고 및 개선 사항
 
-1. **next.config.mjs**:
-- `output: 'export'` - 정적 파일 생성
-- `trailingSlash: true` - GitHub Pages 호환성을 위한 후행 슬래시 추가
-- `images.unoptimized: true` - GitHub Pages를 위한 이미지 최적화 비활성화
-
-2. **package.json**:
-- `"deploy": "gh-pages -d out"` - `/out` 디렉토리를 GitHub Pages에 배포
-
-### 주의사항
-
-- GitHub 저장소 설정에서 Pages 기능이 활성화되어 있어야 함
-- 커스텀 도메인 사용 시 public 디렉토리에 CNAME 파일 추가 필요
-- 이미지와 에셋은 상대 경로 사용
-- 사이트는 `https://{username}.github.io/{repository}`에서 접근 가능
-
-## 더 알아보기
-
-Next.js에 대해 더 자세히 알아보기:
-
-- [Next.js 문서](https://nextjs.org/docs)
-- [Next.js 학습하기](https://nextjs.org/learn)
-- [Next.js GitHub 저장소](https://github.com/vercel/next.js/)
+3. **TIL/**
+   - 일일 학습 내용 기록
+   - 날짜별로 구분
+   - 키워드 중심의 간단한 정리
+   - 향후 자세한 포스팅이 필요한 내용 표시

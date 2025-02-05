@@ -28,7 +28,7 @@ function PostList({postTree}:{postTree:Node}) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setFullUrl(window.location.href);
+      setFullUrl(window.location.href.replace(/\/$/, ''));
     }
   }, [pathname]);
 
@@ -49,13 +49,61 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node, fullUrl }) => {
   const isNode = (node: Node | Post): node is Node => 'children' in node;
   const nodeSlug = node.slug.replace(/\\/g, '/');
   const nodeHref = isNode(node) && node.hasPage ? `/${node.name}` : '';
-  const formattedFullUrl = decodeURIComponent(fullUrl).replace(/\\/g, '/');
+  const formattedFullUrl = decodeURIComponent(fullUrl).replace(/\\/g, '/').replace(/\/$/, '');
   const isActive = formattedFullUrl.endsWith(nodeHref);
+  
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  // mounted 상태 설정
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // mounted 후 localStorage 값 적용
+  useEffect(() => {
+    if (mounted) {
+      const saved = localStorage.getItem(`folder-${nodeSlug}`);
+      if (saved !== null) {
+        setIsOpen(saved === 'true');
+      }
+    }
+  }, [mounted, nodeSlug]);
+
+  // mounted 후 자동 펼치기 적용 및 저장
+  useEffect(() => {
+    if (mounted && formattedFullUrl && nodeSlug) {
+      const currentPath = formattedFullUrl.split('/pages/')[1] || '';
+      if (currentPath.startsWith(nodeSlug)) {
+        setIsOpen(true);
+        localStorage.setItem(`folder-${nodeSlug}`, 'true');
+      }
+    }
+  }, [mounted, formattedFullUrl, nodeSlug]);
+
+  const toggleOpen = () => {
+    const newState = !isOpen;
+    setIsOpen(newState);
+    localStorage.setItem(`folder-${nodeSlug}`, String(newState));
+  };
+
+  // 마운트되기 전에는 접힌 상태로 보여줌
+  if (!mounted) {
+    return (
+      <li className={styles.category}>
+        <input type="checkbox" checked={false} readOnly />
+        <label className={styles.label}>
+          <span className={styles.labelText}>{node.name}</span>
+          <span className={`${styles.arrow}`}>
+            <Image src="/chevron-right.svg" width={16} height={16} alt="chevron" className={styles.chevron} />
+          </span>
+        </label>
+      </li>
+    );
+  }
 
   if (isNode(node) && !node.hasPage) {
     const nodeId = node.slug.replace(/\s+/g, '-').toLowerCase();
-    const toggleOpen = () => setIsOpen(!isOpen);
 
     return (
       <li className={styles.category} key={nodeId}>
